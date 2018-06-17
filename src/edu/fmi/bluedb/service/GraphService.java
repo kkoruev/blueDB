@@ -19,13 +19,23 @@ public class GraphService implements Graph{
 		store = new HashMap<>();
 	}
 	
-	public GraphService getInstance() { 
+	public static GraphService getInstance() { 
 		return Holder.INSTANCE;
 	}
 
 	@Override
 	public void addNode(String label, String id) {
-		// TODO Auto-generated method stub
+		Node node = new Node(id);
+		Map<String, Node> nodes;
+		if (store.containsKey(label)) {
+			nodes = store.get(label);
+			nodes.put(id, node);
+		} else {
+			nodes = new HashMap<>();
+			nodes.put(id, node);
+		}
+
+		store.put(label, nodes);
 		
 	}
 
@@ -37,7 +47,23 @@ public class GraphService implements Graph{
 
 	@Override
 	public void addRelationship(String labelFrom, String idFrom, String labelTo, String idTo) {
-		// TODO Auto-generated method stub
+		Map<String, Node> nodesFrom = store.get(labelFrom);
+		Node nodeFrom = nodesFrom.get(idFrom);
 		
+		Map<String, Node> nodesTo = store.get(labelTo);
+		Node nodeTo = nodesTo.get(idTo);
+	}
+	
+	@Override
+	public void getAllNodes() {
+		//TO DO: Later should return String, now just printing
+		for(String label : store.keySet()) {
+			Map<String, Node> nodes = store.get(label);
+			for (String node_label : nodes.keySet()) {
+				System.out.println("From label " + node_label);
+				Node node = nodes.get(node_label);
+				System.out.println("    Node id: " + node.getId());
+			}
+		}
 	}
 }

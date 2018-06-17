@@ -8,4 +8,6 @@ public interface Graph {
 	
 	void addRelationship(String labelFrom, String idFrom, String labelTo,
 			String idTo);
+	
+	void getAllNodes();
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 public class Node {
 	private String mId;
 	private Map<String, Object> mProperties;
-	private Map<Directions, Map<String, Node>> mRelationship;
+	private Map<Directions, Map<String, Map<String, Node>>> mRelationship;
 	
 	public Node(String id) {
 		mId = id;
@@ -22,9 +22,17 @@ public class Node {
 		mProperties.put(key, entry);
 	}
 	
-	public void addRelationship(Directions direction, Node node) {
-		Map<String, Node> nextNode = new HashMap<>();
-		nextNode.put(node.getId(), node);
-		mRelationship.put(direction, nextNode);
+	public void addRelationship(Directions direction, Node node,
+			String relationshipName) {
+		Map<String, Node> nextNodes;
+		
+		if (mRelationship.containsKey(direction)) {
+			nextNodes = mRelationship.get(direction).get(relationshipName);
+			nextNodes.put(node.getId(), node);
+			
+		} else {
+			
+		}
+//		mRelationship.put(direction, nextNode);
 	}
 }
